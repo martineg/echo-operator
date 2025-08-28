@@ -1,0 +1,9 @@
+apiVersion: echo.martineg.net/v1alpha1
+kind: Echo
+metadata:
+  labels:
+    app.kubernetes.io/name: echo-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: echo-sample
+spec:
+  message: "Hello from the Echo Operator! This is a sample message."
