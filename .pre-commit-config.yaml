@@ -1,0 +1,46 @@
+repos:
+  - repo: local
+    hooks:
+      - id: go-fmt
+        name: Go Format
+        description: Runs gofmt and fails if files are not formatted
+        entry: sh -c 'gofmt -w -s . && git diff --exit-code'
+        language: system
+        files: \.go$
+        pass_filenames: false
+
+      - id: go-vet
+        name: go vet
+        description: Runs go vet and fails if issues found
+        entry: go vet ./...
+        language: system
+        files: \.go$
+        pass_filenames: false
+
+      - id: go-mod-tidy
+        name: go mod tidy
+        description: Runs go mod tidy and fails if go.mod or go.sum need updates
+        entry: sh -c 'go mod tidy && git diff --exit-code go.mod go.sum'
+        language: system
+        files: (go\.mod|go\.sum)$
+        pass_filenames: false
+
+      - id: go-test
+        name: go test
+        description: Runs go test for the entire project
+        entry: make test
+        language: system
+        files: \.go$
+        pass_filenames: false
+
+  # General hooks that are stable
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        exclude: ^(config/crd/bases/|config/manager/manager\.yaml$)  # Skip generated CRDs and multi-doc files
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-merge-conflict

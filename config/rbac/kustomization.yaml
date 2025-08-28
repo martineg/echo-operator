@@ -25,4 +25,3 @@ resources:
 - echo_admin_role.yaml
 - echo_editor_role.yaml
 - echo_viewer_role.yaml
-
